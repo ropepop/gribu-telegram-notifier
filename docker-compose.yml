@@ -1,0 +1,11 @@
+services:
+  gribu-notifier:
+    build: .
+    container_name: gribu-telegram-notifier
+    restart: unless-stopped
+    working_dir: /app
+    command: ["python", "app.py", "daemon"]
+    volumes:
+      - ./state:/app/state
+      - ./logs:/app/logs
+      - ./.env:/app/.env

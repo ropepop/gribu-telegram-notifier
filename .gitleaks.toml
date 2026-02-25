@@ -1,0 +1,6 @@
+[allowlist]
+description = "Allow known placeholders and test fixtures"
+paths = [
+  '''^\.env\.example$''',
+  '''^tests/'''
+]
