@@ -17,6 +17,7 @@ Treat the following as secrets:
 - Keep `.env` permissions restricted (for example: `chmod 600 .env`).
 - Do not paste secrets in issues, pull requests, CI logs, or screenshots.
 - Run `./scripts/prepublish_secret_check.sh` before every push.
+- Follow [docs/sensitive-data-scrub.md](docs/sensitive-data-scrub.md) before sharing docs, logs, screenshots, or terminal output.
 - Keep runtime/state folders local to the device and out of git.
 
 ## Incident Response and Rotation

@@ -108,17 +108,32 @@ python app.py healthcheck
 - Termux: [docs/deploy-termux.md](docs/deploy-termux.md)
 - Docker: [docs/deploy-docker.md](docs/deploy-docker.md)
 
-## Security Notes
+## Security and Data Hygiene
 
-- Never commit `.env`, `state/`, or `logs/`.
-- `GRIBU_COOKIE_HEADER` is runtime-managed and sensitive.
-- Run the prepublish scanner before pushing:
+Before sharing code, docs, logs, screenshots, or terminal output:
+
+- Never publish `.env`, `state/`, `logs/`, raw capture files, real chat IDs, bot tokens, passwords, or cookie headers.
+- Treat `GRIBU_COOKIE_HEADER` as a live session secret, even though it is runtime-managed.
+- Run the prepublish scanner before every push:
 
 ```bash
 ./scripts/prepublish_secret_check.sh
 ```
 
-- See [SECURITY.md](SECURITY.md) for sensitive-data handling and incident response.
+- Use placeholder-only examples in docs, issues, and pull requests.
+
+Safe example format:
+
+```text
+TELEGRAM_BOT_TOKEN=123456789:replace_me
+TELEGRAM_CHAT_ID=123456789
+GRIBU_LOGIN_ID=your_username_or_email
+GRIBU_LOGIN_PASSWORD: <REDACTED>
+GRIBU_COOKIE_HEADER: <REDACTED>
+```
+
+- Follow the redaction workflow in [docs/sensitive-data-scrub.md](docs/sensitive-data-scrub.md).
+- See [SECURITY.md](SECURITY.md) for incident response and credential rotation guidance.
 
 ## Fresh Installs Only
 
