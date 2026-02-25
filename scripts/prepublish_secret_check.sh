@@ -19,11 +19,11 @@ trap 'rm -f "$TMP_FILE"' EXIT
 
 PATTERN='(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{82,}|xox[baprs]-[A-Za-z0-9-]{10,}|-----BEGIN (RSA|EC|OPENSSH|DSA|PGP) PRIVATE KEY-----|TELEGRAM_BOT_TOKEN\s*=\s*[0-9]{8,10}:[A-Za-z0-9_-]{25,}|GRIBU_LOGIN_PASSWORD\s*=\s*[^[:space:]]{3,}|GRIBU_COOKIE_HEADER\s*=\s*[^[:space:]]{10,})'
 
-if git ls-files -z | xargs -0 rg -n --pcre2 -I -e "$PATTERN" > "$TMP_FILE"; then
+if git ls-files -z | xargs -0 rg -nH --pcre2 -e "$PATTERN" > "$TMP_FILE"; then
   if [ -s "$TMP_FILE" ]; then
     FILTERED="$(mktemp)"
     trap 'rm -f "$TMP_FILE" "$FILTERED"' EXIT
-    rg -v '^(\.env\.example|tests/):' "$TMP_FILE" > "$FILTERED" || true
+    rg -v '^(\.env\.example:|tests/)' "$TMP_FILE" > "$FILTERED" || true
     if [ -s "$FILTERED" ]; then
       echo "Potential secrets found in tracked files:" >&2
       cat "$FILTERED" >&2
